@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feedback</title>
+  <link rel="stylesheet" href="{% static 'core/feedback.css' %}" />
+</head>
+<body>
+  <div class="navbar">
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'about' %}">About</a>
+    <a href="{% url 'feedback' %}">Feedback</a>
+  </div>
+
+  <div class="center-wrapper">
+    <div class="feedback-container">
+      <h2>We Value Your Feedback</h2>
+      <textarea id="feedbackText" placeholder="Write your feedback here..."></textarea>
+      <button onclick="submitFeedback()">Submit</button>
+    </div>
+  </div>
+
+  <!-- Popup Box -->
+  <div id="thankYouPopup" class="popup">
+    <div class="popup-content">
+      <p>Response submitted. Thank you!</p>
+      <button onclick="closePopup()">Close</button>
+    </div>
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCFERIhqIiwTOhDSC_w5Zm3WdiasDgqgfE",
+      authDomain: "fir-441fd.firebaseapp.com",
+      databaseURL: "https://fir-441fd-default-rtdb.firebaseio.com",
+      projectId: "fir-441fd",
+      storageBucket: "fir-441fd.appspot.com",
+      messagingSenderId: "211335511072",
+      appId: "1:211335511072:web:e32b18a89d642ed3b7d045"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+
+    function submitFeedback() {
+      const feedback = document.getElementById("feedbackText").value;
+
+      if (feedback.trim() === "") {
+        alert("Please enter your feedback before submitting.");
+        return;
+      }
+
+      const user = firebase.auth().currentUser;
+      if (user) {
+        const feedbackData = {
+          name: user.displayName || "Anonymous",
+          email: user.email,
+          feedback: feedback,
+          timestamp: new Date().toISOString()
+        };
+
+        firebase.database().ref("feedbacks/").push(feedbackData)
+          .then(() => {
+            document.getElementById("feedbackText").value = "";
+            document.getElementById("thankYouPopup").style.display = "flex";
+          })
+          .catch(error => {
+            alert("Error submitting feedback: " + error.message);
+          });
+      } else {
+        alert("You must be logged in to submit feedback.");
+      }
+    }
+
+    function closePopup() {
+      document.getElementById("thankYouPopup").style.display = "none";
+    }
+  </script>
+</body>
+</html>

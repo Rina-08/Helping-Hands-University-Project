@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register</title>
+  <link rel="stylesheet" href="{% static 'core/signup.css' %}" />
+</head>
+<body>
+  <div class="container">
+    <h2>Register Here</h2>
+    <input type="text" id="name" placeholder="Name" />
+    <input type="email" id="email" placeholder="Email" />
+    <select id="role" onchange="togglePasswordField()">
+      <option value="" disabled selected>Select Role</option>
+      <option value="admin">Admin</option>
+      <option value="user">User</option>
+    </select>
+    <input type="password" id="password" placeholder="Password" style="display: none;" />
+    <button onclick="registerVolunteer()">Register</button>
+
+    <div class="link">
+      <a href="{% url 'login' %}">Already have an account? Login here</a>
+    </div>
+    <div class="link">
+      <a href="{% url 'home' %}">← Back to Home</a>
+    </div>
+
+    <div id="user-details" class="details-box" style="display: none;">
+      <h3>✅ Registered User Details:</h3>
+      <p><strong>Name:</strong> <span id="detail-name"></span></p>
+      <p><strong>Email:</strong> <span id="detail-email"></span></p>
+      <p><strong>Role:</strong> <span id="detail-role"></span></p>
+    </div>
+  </div>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCFERIhqIiwTOhDSC_w5Zm3WdiasDgqgfE",
+      authDomain: "fir-441fd.firebaseapp.com",
+      databaseURL: "https://fir-441fd-default-rtdb.firebaseio.com",
+      projectId: "fir-441fd",
+      storageBucket: "fir-441fd.firebasestorage.app",
+      messagingSenderId: "211335511072",
+      appId: "1:211335511072:web:e32b18a89d642ed3b7d045"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    function togglePasswordField() {
+      const role = document.getElementById('role').value;
+      document.getElementById('password').style.display = role === 'admin' ? 'block' : 'none';
+    }
+
+    function registerVolunteer() {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const role = document.getElementById('role').value;
+      const password = document.getElementById('password').value;
+
+      if (!name || !email || !role || (role === 'admin' && !password)) {
+        alert("Please fill all required fields.");
+        return;
+      }
+
+      const userData = { name, email, role };
+
+      const completeRegistration = () => {
+        const userId = firebase.database().ref().child('volunteers').push().key;
+        db.ref('volunteers/' + userId).set(userData);
+        document.getElementById('user-details').style.display = 'block';
+        document.getElementById('detail-name').textContent = name;
+        document.getElementById('detail-email').textContent = email;
+        document.getElementById('detail-role').textContent = role;
+        alert("Registration successful!");
+      };
+
+      if (role === 'admin') {
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+          .then(() => completeRegistration())
+          .catch(error => alert(error.message));
+      } else {
+        completeRegistration();
+      }
+    }
+  </script>
+</body>
+</html>

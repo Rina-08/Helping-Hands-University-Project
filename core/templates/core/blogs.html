@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blogs</title>
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'about' %}">About</a>
+        <a href="{% url 'blogs' %}">Blogs</a>
+        <a href="{% url 'donate' %}">Donate</a>
+        <a href="{% url 'campaigns' %}">Campaigns</a>
+        <a href="{% url 'feedback' %}">Feedback</a>
+        <a href="{% url 'help' %}">Help</a>
+        <a href="{% url 'login' %}">Login</a>
+    </nav>
+    <section class="box">
+        <h1>Latest Blogs</h1>
+        <p>Explore inspiring stories from our volunteers and donors. Stay informed about ongoing activities and social impacts.</p>
+    </section>
+</body>
+</html>

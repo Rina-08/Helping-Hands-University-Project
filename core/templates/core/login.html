@@ -1,0 +1,57 @@
+{% load static %}
+<!-- FILE: login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Volunteer Login</title>
+  <link rel="stylesheet" href="{% static 'core/login.css' %}" />
+</head>
+<body>
+  <div class="login-box">
+    <h3>Please Login Here</h3>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="login()">Login</button>
+    <div id="error-msg"></div>
+
+    <div class="link">
+      <a href="{% url 'signup' %}">Don't have an account? Register here</a>
+    </div>
+    <div class="link">
+      <a href="{% url 'home' %}">← Back to Home</a>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCFERIhqIiwTOhDSC_w5Zm3WdiasDgqgfE",
+      authDomain: "fir-441fd.firebaseapp.com",
+      databaseURL: "https://fir-441fd-default-rtdb.firebaseio.com",
+      projectId: "fir-441fd",
+      storageBucket: "fir-441fd.firebasestorage.app",
+      messagingSenderId: "211335511072",
+      appId: "1:211335511072:web:e32b18a89d642ed3b7d045"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(() => {
+          alert("Login successful!");
+          window.location.href = "{% url 'home' %}";
+        })
+        .catch(err => {
+          document.getElementById("error-msg").innerText = err.message;
+        });
+    }
+  </script>
+</body>
+</html>

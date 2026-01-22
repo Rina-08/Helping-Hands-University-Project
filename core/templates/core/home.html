@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home - Helping Hands</title>
+    <link rel="stylesheet" href="{% static 'core/home.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Helping Hands</div>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'blogs' %}">Blogs</a></li>
+            <li><a href="{% url 'donate' %}">Donate</a></li>
+            <li><a href="{% url 'request_donation' %}">Request Donation</a></li>
+            <li><a href="{% url 'campaigns' %}">Campaigns</a></li>
+            <li><a href="{% url 'request_campaign' %}">Request Campaign</a></li>
+            <li><a href="{% url 'feedback' %}">Feedback</a></li>
+            <li><a href="{% url 'help' %}">Help</a></li>
+            <li><a href="{% url 'login' %}">Login</a></li>
+            <li><a href="{% url 'signup' %}">Signup</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <section class="box">
+            <h2>Welcome to Our Helping Hands</h2>
+            <p>We connect donors and people in need. Our goal is to create a platform where everyone can contribute towards building a better future.</p>
+        </section>
+
+        <section class="box">
+            <h2>Donate Now</h2>
+            <p>Your small donation can bring big change. Visit the <a href="{% url 'donate' %}">Donate</a> page to contribute today.</p>
+        </section>
+
+        <section class="box">
+            <h2>Need Help?</h2>
+            <p>If you or someone you know needs support, <a href="{% url 'request_donation' %}">Request a Donation</a> or check our <a href="{% url 'help' %}">Help</a> section.</p>
+        </section>
+
+        <section class="box">
+            <h2>Our Campaigns</h2>
+            <p>Join our running <a href="{% url 'campaigns' %}">Campaigns</a> or <a href="{% url 'request_campaign' %}">Start your own</a>.</p>
+        </section>
+
+        <section class="box">
+            <h2>Want to Volunteer?</h2>
+            <p>Sign up as a volunteer and start making an impact. <a href="{% url 'signup' %}">Register Here</a>.</p>
+        </section>
+    </main>
+</body>
+</html>

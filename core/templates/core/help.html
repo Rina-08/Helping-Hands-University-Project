@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Help</title>
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+</head>
+<body>
+<nav class="navbar">
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'about' %}">About</a>
+    <a href="{% url 'blogs' %}">Blogs</a>
+    <a href="{% url 'donate' %}">Donate</a>
+    <a href="{% url 'campaigns' %}">Campaigns</a>
+    <a href="{% url 'feedback' %}">Feedback</a>
+    <a href="{% url 'help' %}">Help</a>
+    <a href="{% url 'login' %}">Login</a>
+</nav>
+
+<section class="box">
+    <h1>Need Help?</h1>
+    <p>Check out our FAQs or contact support for any issues or questions related to donations, campaigns, or using the platform.</p>
+</section>
+</body>
+</html>

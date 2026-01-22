@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Request a Campaign</title>
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+</head>
+<body>
+<nav class="navbar">
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'about' %}">About</a>
+    <a href="{% url 'blogs' %}">Blogs</a>
+    <a href="{% url 'donate' %}">Donate</a>
+    <a href="{% url 'campaigns' %}">Campaigns</a>
+    <a href="{% url 'feedback' %}">Feedback</a>
+    <a href="{% url 'help' %}">Help</a>
+    <a href="{% url 'login' %}">Login</a>
+</nav>
+
+<section class="box">
+    <h1>Start a Campaign</h1>
+    <p>Want to raise awareness or organize a donation drive? Submit your campaign idea for review and approval.</p>
+</section>
+</body>
+</html>
